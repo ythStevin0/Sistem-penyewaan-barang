@@ -2,26 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 144 33% 97%; /* #f2f7f4 - very light forest */
+    --foreground: 144 47% 11%; /* #0f2218 - very dark forest */
+    
+    --card: 0 0% 100%;
+    --card-foreground: 144 47% 11%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 144 47% 11%;
+    
+    --primary: 144 33% 42%; /* #489166 - forest-500 */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 40 33% 90%; /* earth tone light */
+    --secondary-foreground: 40 40% 20%;
+    
+    --muted: 144 20% 90%;
+    --muted-foreground: 144 20% 40%;
+    
+    --accent: 23 97% 58%; /* #fc7d2c - ember-500 */
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 144 20% 85%;
+    --input: 144 20% 85%;
+    --ring: 144 33% 42%;
+    
+    --radius: 0.5rem;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/20 selection:text-primary;
+  }
+  
+  /* Custom scrollbar for webkit */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full border-2 border-transparent bg-clip-padding;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm;
   }
 }
