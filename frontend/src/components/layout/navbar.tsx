@@ -13,21 +13,40 @@ export function Navbar() {
   const supabase = createSupabaseBrowserClient();
   const { itemCount } = useCart();
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   const [isSigningOut, setIsSigningOut] = useState(false);
 
   useEffect(() => {
     const client = createSupabaseBrowserClient();
 
-    client.auth.getUser().then(({ data }) => {
+    client.auth.getUser().then(async ({ data }) => {
       setUser(data.user);
+      if (data.user) {
+        const { data: profile } = await client
+          .from("users")
+          .select("role")
+          .eq("id", data.user.id)
+          .single();
+        setIsAdmin(profile?.role === "admin");
+      }
       setIsLoadingAuth(false);
     });
 
     const {
       data: { subscription },
-    } = client.auth.onAuthStateChange((_event, session) => {
+    } = client.auth.onAuthStateChange(async (_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        const { data: profile } = await client
+          .from("users")
+          .select("role")
+          .eq("id", session.user.id)
+          .single();
+        setIsAdmin(profile?.role === "admin");
+      } else {
+        setIsAdmin(false);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -96,6 +115,14 @@ export function Navbar() {
             <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
           ) : user ? (
             <div className="flex items-center gap-1">
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  className="hidden md:flex text-xs font-bold text-accent px-2 py-1 rounded-md bg-accent/10"
+                >
+                  Admin
+                </Link>
+              )}
               <Link
                 href="/dashboard"
                 className="hidden md:flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary px-2 py-2 transition-colors"
