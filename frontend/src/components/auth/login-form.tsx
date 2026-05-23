@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Loader2, AlertCircle } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -11,6 +11,8 @@ import { loginSchema, type LoginInput } from "@/lib/validators/auth";
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/catalog";
   const supabase = createSupabaseBrowserClient();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +47,7 @@ export function LoginForm() {
         return;
       }
 
-      router.push("/catalog");
+      router.push(redirectTo.startsWith("/") ? redirectTo : "/catalog");
       router.refresh();
     } catch (err) {
       setError("Terjadi kesalahan sistem. Silakan coba lagi.");

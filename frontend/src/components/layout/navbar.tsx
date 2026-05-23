@@ -1,11 +1,45 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Mountain, Search, ShoppingBag, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Mountain, Search, ShoppingBag, User, LayoutDashboard, LogOut, Loader2 } from "lucide-react";
 import { useCart } from "@/lib/context/cart-context";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export function Navbar() {
+  const router = useRouter();
+  const supabase = createSupabaseBrowserClient();
   const { itemCount } = useCart();
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  useEffect(() => {
+    const client = createSupabaseBrowserClient();
+
+    client.auth.getUser().then(({ data }) => {
+      setUser(data.user);
+      setIsLoadingAuth(false);
+    });
+
+    const {
+      data: { subscription },
+    } = client.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    await supabase.auth.signOut();
+    router.push("/");
+    router.refresh();
+    setIsSigningOut(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -37,7 +71,7 @@ export function Navbar() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <button
             type="button"
             className="text-muted-foreground hover:text-foreground transition-colors p-2"
@@ -57,13 +91,43 @@ export function Navbar() {
               </span>
             )}
           </Link>
-          <Link
-            href="/login"
-            className="hidden md:flex items-center gap-2 text-sm font-medium bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors"
-          >
-            <User className="h-4 w-4" />
-            Masuk
-          </Link>
+
+          {isLoadingAuth ? (
+            <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+          ) : user ? (
+            <div className="flex items-center gap-1">
+              <Link
+                href="/dashboard"
+                className="hidden md:flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary px-2 py-2 transition-colors"
+                title="Dashboard"
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                <span className="sr-only md:not-sr-only">Pesanan</span>
+              </Link>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                disabled={isSigningOut}
+                className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-destructive px-2 py-2 transition-colors disabled:opacity-50"
+                title="Keluar"
+              >
+                {isSigningOut ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <LogOut className="h-4 w-4" />
+                )}
+                <span className="sr-only">Keluar</span>
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="flex items-center gap-2 text-sm font-medium bg-primary text-primary-foreground px-3 sm:px-4 py-2 rounded-md hover:bg-primary/90 transition-colors"
+            >
+              <User className="h-4 w-4" />
+              <span className="hidden sm:inline">Masuk</span>
+            </Link>
+          )}
         </div>
       </div>
     </header>

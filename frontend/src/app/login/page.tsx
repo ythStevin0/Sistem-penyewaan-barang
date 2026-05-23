@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/login-form";
 
 export const metadata = {
@@ -15,7 +16,9 @@ export default function LoginPage() {
       <div className="absolute inset-0 bg-gradient-to-b from-forest-950/50 via-forest-950 to-forest-950/90"></div>
 
       <div className="relative z-10 w-full flex justify-center">
-        <LoginForm />
+        <Suspense fallback={<div className="text-white text-sm">Memuat...</div>}>
+          <LoginForm />
+        </Suspense>
       </div>
     </div>
   );

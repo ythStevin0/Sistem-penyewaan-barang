@@ -244,20 +244,23 @@ export function CartPageClient() {
                 </div>
               </dl>
               <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
-                Deposit 20% dari subtotal sewa. Upload KTP wajib saat checkout (Tahap berikutnya).
+                Deposit 20% dari subtotal sewa. Upload KTP wajib setiap pemesanan.
               </p>
 
-              <button
-                type="button"
-                disabled={!datesReady}
-                className="mt-5 w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3.5 rounded-xl font-bold hover:bg-accent/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-accent/20"
-                title="Checkout akan tersedia di Tahap 2"
+              <Link
+                href={datesReady ? "/checkout" : "#"}
+                aria-disabled={!datesReady}
+                className={`mt-5 w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-accent/20 ${
+                  datesReady
+                    ? "hover:bg-accent/90"
+                    : "opacity-50 pointer-events-none cursor-not-allowed"
+                }`}
               >
                 Lanjut Checkout
                 <ArrowRight className="h-5 w-5" />
-              </button>
+              </Link>
               <p className="text-center text-[11px] text-muted-foreground mt-2">
-                Fitur checkout & upload KTP — segera hadir
+                Login diperlukan untuk menyelesaikan pemesanan
               </p>
 
               <Link
