@@ -34,15 +34,17 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const CART_STORAGE_KEY = "samidd_cart";
 const DATES_STORAGE_KEY = "samidd_dates";
-const DEPOSIT_PER_ORDER = 50000; // Rp 50.000 flat per pesanan
 
-// --- Helper: Hitung selisih hari ---
+/** Deposit jaminan: 20% dari subtotal sewa */
+export const DEPOSIT_RATE = 0.2;
+
+/** Hitung jumlah hari sewa (tanggal mulai & selesai inklusif) */
 function calculateDays(start: string, end: string): number {
-  const startMs = new Date(start).getTime();
-  const endMs = new Date(end).getTime();
-  const diffMs = endMs - startMs;
-  const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-  return days > 0 ? days : 0;
+  const startDate = new Date(`${start}T00:00:00`);
+  const endDate = new Date(`${end}T00:00:00`);
+  const diffMs = endDate.getTime() - startDate.getTime();
+  if (diffMs < 0) return 0;
+  return Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
 }
 
 // --- Provider ---
@@ -92,7 +94,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return sum + item.product.harga_sewa_per_hari * item.quantity * totalDays;
   }, 0);
 
-  const depositAmount = cartItems.length > 0 ? DEPOSIT_PER_ORDER : 0;
+  const depositAmount =
+    cartItems.length > 0 && subtotal > 0 ? Math.round(subtotal * DEPOSIT_RATE) : 0;
   const grandTotal = subtotal + depositAmount;
 
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);

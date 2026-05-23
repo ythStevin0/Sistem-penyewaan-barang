@@ -3,8 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Star, Minus, Plus, ShoppingBag, ChevronLeft, ShieldCheck, Calendar } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Star, Minus, Plus, ShoppingBag, ChevronLeft, ShieldCheck, Calendar, Check } from "lucide-react";
 import type { Product } from "@/types";
+import { useCart } from "@/lib/context/cart-context";
+import { formatRupiah } from "@/lib/format/currency";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -12,14 +15,9 @@ interface ProductDetailClientProps {
 
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const [quantity, setQuantity] = useState(1);
-
-  const formatRupiah = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
+  const [cartFeedback, setCartFeedback] = useState(false);
+  const router = useRouter();
+  const { addToCart } = useCart();
 
   const handleIncrement = () => {
     if (quantity < product.stok) {
@@ -34,11 +32,14 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   };
 
   const handleAddToCart = () => {
-    alert(`Berhasil menambahkan ${quantity}x ${product.nama} ke keranjang!`);
+    addToCart(product, quantity);
+    setCartFeedback(true);
+    window.setTimeout(() => setCartFeedback(false), 2500);
   };
 
   const handleRentNow = () => {
-    alert(`Membuka form pemesanan untuk ${quantity}x ${product.nama}!`);
+    addToCart(product, quantity);
+    router.push("/cart");
   };
 
   const imageUrl = product.gambar_urls?.[0] || "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=1200&auto=format&fit=crop";
@@ -176,8 +177,19 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 </span>
               </div>
 
+              {cartFeedback && (
+                <p className="flex items-center gap-2 text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-2.5">
+                  <Check className="h-4 w-4 shrink-0" />
+                  {quantity}x {product.nama} ditambahkan ke keranjang.
+                  <Link href="/cart" className="underline hover:no-underline ml-1">
+                    Lihat keranjang
+                  </Link>
+                </p>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <button
+                  type="button"
                   onClick={handleAddToCart}
                   className="w-full border-2 border-primary text-primary py-3.5 rounded-xl font-bold hover:bg-primary/5 transition-all flex items-center justify-center gap-2"
                 >
@@ -185,6 +197,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                   + Keranjang
                 </button>
                 <button
+                  type="button"
                   onClick={handleRentNow}
                   className="w-full bg-accent text-accent-foreground py-3.5 rounded-xl font-bold hover:bg-accent/90 shadow-lg shadow-accent/20 transition-all flex items-center justify-center gap-2"
                 >
