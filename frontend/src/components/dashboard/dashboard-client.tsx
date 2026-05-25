@@ -22,10 +22,14 @@ import {
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { uploadUserFile } from "@/lib/storage/upload";
 import { attachPaymentProof } from "@/app/actions/booking";
+import { OverdueBanner } from "@/components/notifications/overdue-banner";
+import { RentalQr } from "@/components/rental/rental-qr";
 
 interface DashboardClientProps {
   rentals: Rental[];
   userId: string;
+  overdueCount: number;
+  overdueProcessed: number;
 }
 
 function formatDateId(dateStr: string): string {
@@ -36,7 +40,12 @@ function formatDateId(dateStr: string): string {
   });
 }
 
-export function DashboardClient({ rentals: initialRentals, userId }: DashboardClientProps) {
+export function DashboardClient({
+  rentals: initialRentals,
+  userId,
+  overdueCount,
+  overdueProcessed,
+}: DashboardClientProps) {
   const router = useRouter();
   const supabase = createSupabaseBrowserClient();
   const [rentals, setRentals] = useState(initialRentals);
@@ -97,6 +106,8 @@ export function DashboardClient({ rentals: initialRentals, userId }: DashboardCl
       <h1 className="text-3xl font-extrabold text-forest-950 mb-1">Dashboard Saya</h1>
       <p className="text-muted-foreground mb-8">Riwayat dan status penyewaan Anda</p>
 
+      <OverdueBanner count={overdueProcessed > 0 ? overdueProcessed : overdueCount} />
+
       {uploadError && (
         <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm flex gap-2">
           <AlertCircle className="h-4 w-4 shrink-0" />
@@ -121,7 +132,7 @@ export function DashboardClient({ rentals: initialRentals, userId }: DashboardCl
           return (
             <article
               key={rental.id}
-              className="bg-white rounded-xl border border-border shadow-sm overflow-hidden"
+              className="bg-card rounded-xl border border-border shadow-sm overflow-hidden"
             >
               <div className="p-5 border-b border-border/60 flex flex-wrap items-start justify-between gap-3">
                 <div>
@@ -229,6 +240,10 @@ export function DashboardClient({ rentals: initialRentals, userId }: DashboardCl
                     Bukti pembayaran sudah diunggah — menunggu verifikasi admin.
                   </p>
                 )}
+
+                <div className="pt-3 flex justify-center">
+                  <RentalQr rentalId={rental.id} size={120} />
+                </div>
               </div>
             </article>
           );

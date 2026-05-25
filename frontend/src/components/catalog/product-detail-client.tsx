@@ -8,6 +8,7 @@ import { Star, Minus, Plus, ShoppingBag, ChevronLeft, ShieldCheck, Calendar, Che
 import type { Product } from "@/types";
 import { useCart } from "@/lib/context/cart-context";
 import { formatRupiah } from "@/lib/format/currency";
+import { WishlistButton } from "./wishlist-button";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -76,13 +77,16 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <div className="lg:col-span-6 flex flex-col">
           {/* Badge & Rating */}
           <div className="flex items-center justify-between gap-4 mb-4">
-            {product.categories && (
-              <span className="bg-primary/10 text-primary text-xs uppercase font-extrabold tracking-wider px-3 py-1.5 rounded-full border border-primary/20">
-                {product.categories.nama}
-              </span>
-            )}
-            
-            <div className="flex items-center gap-1 bg-white px-3 py-1.5 rounded-full border border-border">
+            <div className="flex items-center gap-2">
+              {product.categories && (
+                <span className="bg-primary/10 text-primary text-xs uppercase font-extrabold tracking-wider px-3 py-1.5 rounded-full border border-primary/20">
+                  {product.categories.nama}
+                </span>
+              )}
+              <WishlistButton productId={product.id} />
+            </div>
+
+            <div className="flex items-center gap-1 bg-card px-3 py-1.5 rounded-full border border-border">
               <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
               <span className="text-xs font-bold text-forest-950">4.8</span>
               <span className="text-[10px] text-muted-foreground">(24 Ulasan)</span>

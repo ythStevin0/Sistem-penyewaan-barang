@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { DashboardClient } from "@/components/dashboard/dashboard-client";
+import { processOverdueRentals } from "@/app/actions/overdue";
 import type { Rental } from "@/types/rental";
 
 export const metadata: Metadata = {
@@ -18,6 +19,8 @@ export default async function DashboardPage() {
   if (!user) {
     redirect("/login?redirect=/dashboard");
   }
+
+  const { count: overdueProcessed } = await processOverdueRentals();
 
   const { data, error } = await supabase
     .from("rentals")
@@ -38,5 +41,15 @@ export default async function DashboardPage() {
     console.error("Dashboard fetch error:", error.message);
   }
 
-  return <DashboardClient rentals={(data as Rental[]) ?? []} userId={user.id} />;
+  const rentals = (data as Rental[]) ?? [];
+  const overdueCount = rentals.filter((r) => r.status === "terlambat").length;
+
+  return (
+    <DashboardClient
+      rentals={rentals}
+      userId={user.id}
+      overdueCount={overdueCount}
+      overdueProcessed={overdueProcessed}
+    />
+  );
 }

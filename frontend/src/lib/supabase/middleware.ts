@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PROTECTED_PREFIXES = ["/checkout", "/dashboard", "/booking"];
+const PROTECTED_PREFIXES = ["/checkout", "/dashboard", "/booking", "/wishlist"];
 const AUTH_ROUTES = ["/login", "/register"];
 const ADMIN_PREFIX = "/admin";
 

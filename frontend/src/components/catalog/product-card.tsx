@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Star, ShieldAlert } from "lucide-react";
 import type { Product } from "@/types";
+import { WishlistButton } from "./wishlist-button";
 
 interface ProductCardProps {
   product: Product;
@@ -21,7 +22,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const imageUrl = product.gambar_urls?.[0] || "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=600&auto=format&fit=crop";
 
   return (
-    <div className="group relative bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg hover:border-primary/20 transition-all duration-300 flex flex-col h-full">
+    <div className="group relative bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg hover:border-primary/20 transition-all duration-300 flex flex-col h-full">
       {/* Product Image Section */}
       <div className="relative aspect-square w-full bg-muted overflow-hidden">
         <Image
@@ -32,6 +33,10 @@ export function ProductCard({ product }: ProductCardProps) {
           className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
         />
         
+        <div className="absolute top-3 right-3 z-10">
+          <WishlistButton productId={product.id} />
+        </div>
+
         {/* Category Badge */}
         {product.categories && (
           <span className="absolute top-3 left-3 bg-forest-900/80 backdrop-blur-sm text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full">

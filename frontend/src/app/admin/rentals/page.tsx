@@ -1,10 +1,13 @@
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { processOverdueRentals } from "@/app/actions/overdue";
+import { OverdueBanner } from "@/components/notifications/overdue-banner";
 import { RentalsManager } from "@/components/admin/rentals-manager";
 
 export const metadata = { title: "Penyewaan | Admin" };
 
 export default async function AdminRentalsPage() {
   const { supabase } = await requireAdmin();
+  const { count: overdueProcessed } = await processOverdueRentals();
 
   const { data } = await supabase
     .from("rentals")
@@ -21,6 +24,7 @@ export default async function AdminRentalsPage() {
   return (
     <div>
       <h1 className="text-2xl font-extrabold text-forest-950 mb-6">Kelola Penyewaan</h1>
+      <OverdueBanner count={overdueProcessed} role="admin" />
       <RentalsManager rentals={data ?? []} />
     </div>
   );

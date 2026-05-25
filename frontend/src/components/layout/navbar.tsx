@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Mountain, Search, ShoppingBag, User, LayoutDashboard, LogOut, Loader2 } from "lucide-react";
+import { Mountain, Search, ShoppingBag, User, LayoutDashboard, LogOut, Loader2, Heart } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useWishlist } from "@/lib/context/wishlist-context";
 import { useCart } from "@/lib/context/cart-context";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
@@ -12,6 +14,7 @@ export function Navbar() {
   const router = useRouter();
   const supabase = createSupabaseBrowserClient();
   const { itemCount } = useCart();
+  const { ids: wishlistIds } = useWishlist();
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
@@ -91,6 +94,19 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-4">
+          <ThemeToggle />
+          <Link
+            href="/wishlist"
+            className="text-muted-foreground hover:text-foreground transition-colors p-2 relative"
+          >
+            <Heart className="h-5 w-5" />
+            <span className="sr-only">Favorit</span>
+            {wishlistIds.size > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+                {wishlistIds.size > 99 ? "99+" : wishlistIds.size}
+              </span>
+            )}
+          </Link>
           <button
             type="button"
             className="text-muted-foreground hover:text-foreground transition-colors p-2"

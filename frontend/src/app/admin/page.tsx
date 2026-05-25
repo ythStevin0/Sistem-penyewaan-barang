@@ -1,4 +1,6 @@
 import { requireAdmin } from "@/lib/supabase/admin-auth";
+import { processOverdueRentals } from "@/app/actions/overdue";
+import { OverdueBanner } from "@/components/notifications/overdue-banner";
 import { formatRupiah } from "@/lib/format/currency";
 import { Package, Clock, Banknote, TrendingUp } from "lucide-react";
 
@@ -6,6 +8,7 @@ export const metadata = { title: "Admin | Samidd Outdoor" };
 
 export default async function AdminDashboardPage() {
   const { supabase } = await requireAdmin();
+  const { count: overdueProcessed } = await processOverdueRentals();
 
   const [
     { count: totalRentals },
@@ -47,6 +50,7 @@ export default async function AdminDashboardPage() {
   return (
     <div>
       <h1 className="text-2xl font-extrabold text-forest-950 mb-6">Ringkasan</h1>
+      <OverdueBanner count={overdueProcessed} role="admin" />
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {stats.map(({ label, value, icon: Icon }) => (
           <div key={label} className="bg-white rounded-xl border border-border p-5">
