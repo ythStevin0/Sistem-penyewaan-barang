@@ -57,9 +57,9 @@ export function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md p-8 rounded-2xl glass shadow-xl border border-white/25">
+    <div className="w-full max-w-md p-8 rounded-2xl glass shadow-xl">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-extrabold text-forest-950">Selamat Datang</h2>
+        <h2 className="text-3xl font-extrabold text-foreground">Selamat Datang</h2>
         <p className="text-muted-foreground mt-2 text-sm">Masuk untuk mulai menyewa alat pendakian</p>
       </div>
 
@@ -72,7 +72,7 @@ export function LoginForm() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <div>
-          <label className="block text-sm font-semibold text-forest-900 mb-1.5" htmlFor="email">
+          <label className="block text-sm font-semibold text-foreground mb-1.5" htmlFor="email">
             Email
           </label>
           <input
@@ -80,7 +80,7 @@ export function LoginForm() {
             type="email"
             placeholder="nama@email.com"
             disabled={isLoading}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-background/60 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
             {...register("email")}
           />
           {errors.email && (
@@ -89,7 +89,7 @@ export function LoginForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-forest-900 mb-1.5" htmlFor="password">
+          <label className="block text-sm font-semibold text-foreground mb-1.5" htmlFor="password">
             Password
           </label>
           <input
@@ -97,7 +97,7 @@ export function LoginForm() {
             type="password"
             placeholder="••••••••"
             disabled={isLoading}
-            className="w-full px-4 py-3 rounded-lg border border-border bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-background/60 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
             {...register("password")}
           />
           {errors.password && (

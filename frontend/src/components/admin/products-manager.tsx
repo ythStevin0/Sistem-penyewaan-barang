@@ -84,7 +84,7 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-extrabold text-forest-950">Produk</h1>
+        <h1 className="text-2xl font-extrabold text-foreground">Produk</h1>
         <button
           type="button"
           onClick={openNew}
@@ -96,9 +96,9 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
 
       {error && <p className="text-sm text-destructive mb-4">{error}</p>}
 
-      <div className="bg-white rounded-xl border border-border overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-forest-50/50 text-left">
+          <thead className="bg-muted/50 text-left">
             <tr>
               <th className="px-4 py-3 font-semibold">Nama</th>
               <th className="px-4 py-3 font-semibold">Harga/hari</th>
@@ -109,7 +109,7 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
           </thead>
           <tbody className="divide-y divide-border">
             {products.map((p) => (
-              <tr key={p.id} className="hover:bg-forest-50/20">
+              <tr key={p.id} className="hover:bg-muted/40">
                 <td className="px-4 py-3 font-medium">{p.nama}</td>
                 <td className="px-4 py-3">{formatRupiah(p.harga_sewa_per_hari)}</td>
                 <td className="px-4 py-3">{p.stok}</td>
@@ -136,7 +136,7 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
-          <div className="bg-white rounded-xl border border-border p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+          <div className="bg-card rounded-xl border border-border p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <h2 className="font-bold text-lg mb-4">{form.id ? "Edit" : "Tambah"} Produk</h2>
             <div className="space-y-3 text-sm">
               <input

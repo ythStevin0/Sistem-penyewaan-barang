@@ -23,7 +23,7 @@ export default async function AdminRentalsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-extrabold text-forest-950 mb-6">Kelola Penyewaan</h1>
+      <h1 className="text-2xl font-extrabold text-foreground mb-6">Kelola Penyewaan</h1>
       <OverdueBanner count={overdueProcessed} role="admin" />
       <RentalsManager rentals={data ?? []} />
     </div>

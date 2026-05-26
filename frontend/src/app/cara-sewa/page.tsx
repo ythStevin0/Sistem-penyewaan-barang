@@ -16,7 +16,7 @@ export default function CaraSewaPage() {
 
   return (
     <div className="container py-12 max-w-2xl">
-      <h1 className="text-3xl font-extrabold text-forest-950 dark:text-forest-50 mb-6">Cara Sewa</h1>
+      <h1 className="text-3xl font-extrabold text-foreground mb-6">Cara Sewa</h1>
       <ol className="space-y-4 mb-8">
         {steps.map((s, i) => (
           <li key={s} className="flex gap-3 text-muted-foreground">

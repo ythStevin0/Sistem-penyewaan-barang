@@ -49,19 +49,19 @@ export default async function AdminDashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-extrabold text-forest-950 mb-6">Ringkasan</h1>
+      <h1 className="text-2xl font-extrabold text-foreground mb-6">Ringkasan</h1>
       <OverdueBanner count={overdueProcessed} role="admin" />
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {stats.map(({ label, value, icon: Icon }) => (
-          <div key={label} className="bg-white rounded-xl border border-border p-5">
+          <div key={label} className="bg-card rounded-xl border border-border p-5">
             <Icon className="h-5 w-5 text-primary mb-2" />
             <p className="text-xs text-muted-foreground font-semibold uppercase">{label}</p>
-            <p className="text-2xl font-black text-forest-950 mt-1">{value}</p>
+            <p className="text-2xl font-black text-foreground mt-1">{value}</p>
           </div>
         ))}
       </div>
-      <div className="bg-white rounded-xl border border-border p-5">
-        <h2 className="font-bold text-forest-950 flex items-center gap-2 mb-4">
+      <div className="bg-card rounded-xl border border-border p-5">
+        <h2 className="font-bold text-foreground flex items-center gap-2 mb-4">
           <TrendingUp className="h-5 w-5 text-primary" />
           Barang Terpopuler
         </h2>

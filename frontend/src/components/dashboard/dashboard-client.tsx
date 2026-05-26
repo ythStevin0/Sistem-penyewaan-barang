@@ -89,7 +89,7 @@ export function DashboardClient({
     return (
       <div className="container py-16 max-w-lg text-center">
         <Package className="h-14 w-14 text-muted-foreground mx-auto mb-4" />
-        <h1 className="text-2xl font-extrabold text-forest-950 mb-2">Belum Ada Pesanan</h1>
+        <h1 className="text-2xl font-extrabold text-foreground mb-2">Belum Ada Pesanan</h1>
         <p className="text-muted-foreground mb-6">Riwayat penyewaan Anda akan muncul di sini.</p>
         <Link
           href="/catalog"
@@ -103,7 +103,7 @@ export function DashboardClient({
 
   return (
     <div className="container py-8 max-w-4xl">
-      <h1 className="text-3xl font-extrabold text-forest-950 mb-1">Dashboard Saya</h1>
+      <h1 className="text-3xl font-extrabold text-foreground mb-1">Dashboard Saya</h1>
       <p className="text-muted-foreground mb-8">Riwayat dan status penyewaan Anda</p>
 
       <OverdueBanner count={overdueProcessed > 0 ? overdueProcessed : overdueCount} />
@@ -115,7 +115,7 @@ export function DashboardClient({
         </div>
       )}
       {uploadSuccess && (
-        <div className="mb-4 p-3 rounded-lg bg-green-50 text-green-800 text-sm flex gap-2">
+        <div className="mb-4 p-3 rounded-lg alert-success text-sm flex gap-2">
           <CheckCircle2 className="h-4 w-4 shrink-0" />
           {uploadSuccess}
         </div>
@@ -182,7 +182,7 @@ export function DashboardClient({
                     {payment && (
                       <p className="text-muted-foreground">
                         Bayar:{" "}
-                        <span className="font-semibold text-forest-950">
+                        <span className="font-semibold text-foreground">
                           {paymentMethodLabels[payment.metode_pembayaran]}
                         </span>
                       </p>
@@ -198,14 +198,14 @@ export function DashboardClient({
 
                 {payment?.metode_pembayaran === "tunai" &&
                   rental.status === "menunggu_pembayaran" && (
-                    <p className="text-xs bg-amber-50 border border-amber-200 text-amber-800 rounded-lg px-3 py-2">
+                    <p className="text-xs alert-warning rounded-lg px-3 py-2">
                       Bayar tunai saat mengambil barang di lokasi Samidd Outdoor.
                     </p>
                   )}
 
                 {needsProof && payment && (
-                  <div className="mt-2 p-4 rounded-lg bg-forest-50/50 border border-forest-100">
-                    <p className="text-sm font-semibold text-forest-950 mb-2">
+                  <div className="mt-2 p-4 rounded-lg bg-muted/50 border border-border">
+                    <p className="text-sm font-semibold text-foreground mb-2">
                       Upload bukti transfer
                     </p>
                     <label className="inline-flex items-center gap-2 text-sm font-semibold text-primary cursor-pointer hover:underline">
@@ -235,7 +235,7 @@ export function DashboardClient({
                 )}
 
                 {payment?.bukti_pembayaran_url && payment.status === "pending" && (
-                  <p className="text-xs text-green-700 font-medium flex items-center gap-1">
+                  <p className="text-xs text-green-600 dark:text-green-400 font-medium flex items-center gap-1">
                     <CheckCircle2 className="h-3.5 w-3.5" />
                     Bukti pembayaran sudah diunggah — menunggu verifikasi admin.
                   </p>

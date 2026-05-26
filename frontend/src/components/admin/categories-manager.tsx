@@ -60,7 +60,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-extrabold text-forest-950">Kategori</h1>
+        <h1 className="text-2xl font-extrabold text-foreground">Kategori</h1>
         <button
           type="button"
           onClick={openNew}
@@ -76,7 +76,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
         {categories.map((c) => (
           <div
             key={c.id}
-            className="bg-white rounded-xl border border-border p-4 flex justify-between items-center"
+            className="bg-card rounded-xl border border-border p-4 flex justify-between items-center"
           >
             <div>
               <p className="font-bold">{c.nama}</p>
@@ -100,7 +100,7 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
-          <div className="bg-white rounded-xl border p-6 w-full max-w-md">
+          <div className="bg-card rounded-xl border p-6 w-full max-w-md">
             <h2 className="font-bold mb-4">{form.id ? "Edit" : "Tambah"} Kategori</h2>
             <div className="space-y-3 text-sm">
               <input

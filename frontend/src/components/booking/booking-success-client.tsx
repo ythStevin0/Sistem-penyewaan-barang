@@ -7,8 +7,8 @@ import { RentalQr } from "@/components/rental/rental-qr";
 export function BookingSuccessClient({ rentalId }: { rentalId: string }) {
   return (
     <div className="container py-20 max-w-lg text-center">
-      <CheckCircle2 className="h-16 w-16 text-green-600 mx-auto mb-6" />
-      <h1 className="text-3xl font-extrabold text-forest-950 dark:text-forest-50 mb-2">
+      <CheckCircle2 className="h-16 w-16 text-green-600 dark:text-green-400 mx-auto mb-6" />
+      <h1 className="text-3xl font-extrabold text-foreground mb-2">
         Pemesanan Berhasil!
       </h1>
       <p className="text-muted-foreground mb-6">

@@ -73,9 +73,9 @@ export function RegisterForm() {
   };
 
   return (
-    <div className="w-full max-w-lg p-8 rounded-2xl glass shadow-xl border border-white/25">
+    <div className="w-full max-w-lg p-8 rounded-2xl glass shadow-xl">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-extrabold text-forest-950">Buat Akun Baru</h2>
+        <h2 className="text-3xl font-extrabold text-foreground">Buat Akun Baru</h2>
         <p className="text-muted-foreground mt-2 text-sm">Lengkapi data untuk menikmati layanan sewa kami</p>
       </div>
 
@@ -87,7 +87,7 @@ export function RegisterForm() {
       )}
 
       {success && (
-        <div className="mb-6 p-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-700 text-sm flex items-center gap-2">
+        <div className="mb-6 p-4 rounded-lg alert-success text-sm flex items-center gap-2">
           <CheckCircle2 className="h-5 w-5 shrink-0 text-green-600" />
           <span>{success}</span>
         </div>
@@ -96,7 +96,7 @@ export function RegisterForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-forest-900 mb-1" htmlFor="nama_lengkap">
+            <label className="block text-sm font-semibold text-foreground mb-1" htmlFor="nama_lengkap">
               Nama Lengkap
             </label>
             <input
@@ -104,7 +104,7 @@ export function RegisterForm() {
               type="text"
               placeholder="Joko Susilo"
               disabled={isLoading || !!success}
-              className="w-full px-4 py-2.5 rounded-lg border border-border bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+              className="w-full px-4 py-2.5 rounded-lg border border-border bg-background/60 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
               {...register("nama_lengkap")}
             />
             {errors.nama_lengkap && (
@@ -113,7 +113,7 @@ export function RegisterForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-forest-900 mb-1" htmlFor="no_hp">
+            <label className="block text-sm font-semibold text-foreground mb-1" htmlFor="no_hp">
               Nomor HP (WhatsApp)
             </label>
             <input
@@ -121,7 +121,7 @@ export function RegisterForm() {
               type="text"
               placeholder="081234567890"
               disabled={isLoading || !!success}
-              className="w-full px-4 py-2.5 rounded-lg border border-border bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+              className="w-full px-4 py-2.5 rounded-lg border border-border bg-background/60 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
               {...register("no_hp")}
             />
             {errors.no_hp && (
@@ -131,7 +131,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-forest-900 mb-1" htmlFor="alamat">
+          <label className="block text-sm font-semibold text-foreground mb-1" htmlFor="alamat">
             Alamat Lengkap (KTP)
           </label>
           <textarea
@@ -139,7 +139,7 @@ export function RegisterForm() {
             placeholder="Jl. Merdeka No. 12, RT 01/RW 02, Kec. Klojen, Malang"
             disabled={isLoading || !!success}
             rows={2}
-            className="w-full px-4 py-2.5 rounded-lg border border-border bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50 resize-none"
+            className="w-full px-4 py-2.5 rounded-lg border border-border bg-background/60 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50 resize-none"
             {...register("alamat")}
           />
           {errors.alamat && (
@@ -148,7 +148,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-forest-900 mb-1" htmlFor="email">
+          <label className="block text-sm font-semibold text-foreground mb-1" htmlFor="email">
             Email
           </label>
           <input
@@ -156,7 +156,7 @@ export function RegisterForm() {
             type="email"
             placeholder="nama@email.com"
             disabled={isLoading || !!success}
-            className="w-full px-4 py-2.5 rounded-lg border border-border bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+            className="w-full px-4 py-2.5 rounded-lg border border-border bg-background/60 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
             {...register("email")}
           />
           {errors.email && (
@@ -166,7 +166,7 @@ export function RegisterForm() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-forest-900 mb-1" htmlFor="password">
+            <label className="block text-sm font-semibold text-foreground mb-1" htmlFor="password">
               Password
             </label>
             <input
@@ -174,7 +174,7 @@ export function RegisterForm() {
               type="password"
               placeholder="••••••••"
               disabled={isLoading || !!success}
-              className="w-full px-4 py-2.5 rounded-lg border border-border bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+              className="w-full px-4 py-2.5 rounded-lg border border-border bg-background/60 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
               {...register("password")}
             />
             {errors.password && (
@@ -183,7 +183,7 @@ export function RegisterForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-forest-900 mb-1" htmlFor="confirmPassword">
+            <label className="block text-sm font-semibold text-foreground mb-1" htmlFor="confirmPassword">
               Konfirmasi Password
             </label>
             <input
@@ -191,7 +191,7 @@ export function RegisterForm() {
               type="password"
               placeholder="••••••••"
               disabled={isLoading || !!success}
-              className="w-full px-4 py-2.5 rounded-lg border border-border bg-white/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+              className="w-full px-4 py-2.5 rounded-lg border border-border bg-background/60 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
               {...register("confirmPassword")}
             />
             {errors.confirmPassword && (

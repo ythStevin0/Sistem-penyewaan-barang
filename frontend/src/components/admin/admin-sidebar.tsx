@@ -16,7 +16,7 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-56 shrink-0 border-r border-border bg-white min-h-[calc(100vh-4rem)] p-4">
+    <aside className="w-56 shrink-0 border-r border-border bg-card min-h-[calc(100vh-4rem)] p-4">
       <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4 px-2">
         Admin Panel
       </p>
@@ -29,7 +29,7 @@ export function AdminSidebar() {
               "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
               pathname === href
                 ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:bg-forest-50 hover:text-forest-950"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
           >
             <Icon className="h-4 w-4" />

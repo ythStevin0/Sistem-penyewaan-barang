@@ -42,7 +42,7 @@ export default async function WishlistPage() {
 
   return (
     <div className="container py-8">
-      <h1 className="text-3xl font-extrabold text-forest-950 dark:text-forest-50 mb-6 flex items-center gap-2">
+      <h1 className="text-3xl font-extrabold text-foreground mb-6 flex items-center gap-2">
         <Heart className="h-8 w-8 text-accent fill-accent" />
         Favorit Saya
       </h1>

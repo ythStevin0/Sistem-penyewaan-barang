@@ -61,7 +61,7 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
     return (
       <div className="container py-16 max-w-lg text-center">
         <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-        <h1 className="text-xl font-bold text-forest-950 mb-2">Checkout tidak tersedia</h1>
+        <h1 className="text-xl font-bold text-foreground mb-2">Checkout tidak tersedia</h1>
         <p className="text-muted-foreground mb-6">
           Keranjang kosong atau tanggal sewa belum dipilih.
         </p>
@@ -125,7 +125,7 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
         Kembali ke keranjang
       </Link>
 
-      <h1 className="text-3xl font-extrabold text-forest-950 mb-2">Checkout</h1>
+      <h1 className="text-3xl font-extrabold text-foreground mb-2">Checkout</h1>
       <p className="text-muted-foreground mb-8">
         Periode {startDate} s/d {endDate} · {totalDays} hari
       </p>
@@ -140,8 +140,8 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         <div className="lg:col-span-3 space-y-6">
           {/* Ringkasan barang */}
-          <div className="bg-white rounded-xl border border-border p-5 space-y-3">
-            <h2 className="font-bold text-forest-950">Barang Disewa</h2>
+          <div className="bg-card rounded-xl border border-border p-5 space-y-3">
+            <h2 className="font-bold text-foreground">Barang Disewa</h2>
             {cartItems.map((item) => {
               const img =
                 item.product.gambar_urls?.[0] ||
@@ -163,17 +163,17 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
           </div>
 
           {/* Upload KTP */}
-          <div className="bg-white rounded-xl border border-border p-5">
-            <h2 className="font-bold text-forest-950 flex items-center gap-2 mb-1">
+          <div className="bg-card rounded-xl border border-border p-5">
+            <h2 className="font-bold text-foreground flex items-center gap-2 mb-1">
               <ShieldCheck className="h-5 w-5 text-primary" />
               Jaminan KTP
             </h2>
             <p className="text-xs text-muted-foreground mb-4">
               Upload KTP wajib untuk setiap pemesanan (JPG, PNG, WebP, atau PDF, maks. 5 MB).
             </p>
-            <label className="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-primary/50 hover:bg-forest-50/30 transition-colors">
+            <label className="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-primary/50 hover:bg-muted/40 transition-colors">
               <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-              <span className="text-sm font-medium text-forest-950">
+              <span className="text-sm font-medium text-foreground">
                 {ktpFile ? ktpFile.name : "Pilih file KTP"}
               </span>
               <input
@@ -186,8 +186,8 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
           </div>
 
           {/* Metode bayar */}
-          <div className="bg-white rounded-xl border border-border p-5">
-            <h2 className="font-bold text-forest-950 mb-4">Metode Pembayaran</h2>
+          <div className="bg-card rounded-xl border border-border p-5">
+            <h2 className="font-bold text-foreground mb-4">Metode Pembayaran</h2>
             <div className="space-y-3">
               <label className="flex items-start gap-3 p-4 rounded-xl border border-border cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5">
                 <input
@@ -197,7 +197,7 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
                   {...register("metode_pembayaran")}
                 />
                 <div>
-                  <span className="font-semibold text-forest-950 flex items-center gap-2">
+                  <span className="font-semibold text-foreground flex items-center gap-2">
                     <CreditCard className="h-4 w-4 text-primary" />
                     {paymentMethodLabels.transfer_bank}
                   </span>
@@ -215,7 +215,7 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
                   {...register("metode_pembayaran")}
                 />
                 <div>
-                  <span className="font-semibold text-forest-950 flex items-center gap-2">
+                  <span className="font-semibold text-foreground flex items-center gap-2">
                     <Banknote className="h-4 w-4 text-accent" />
                     {paymentMethodLabels.tunai}
                   </span>
@@ -231,8 +231,8 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
           </div>
 
           {/* Catatan */}
-          <div className="bg-white rounded-xl border border-border p-5">
-            <label className="font-bold text-forest-950 block mb-2" htmlFor="catatan">
+          <div className="bg-card rounded-xl border border-border p-5">
+            <label className="font-bold text-foreground block mb-2" htmlFor="catatan">
               Catatan (opsional)
             </label>
             <textarea
@@ -247,8 +247,8 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
 
         {/* Sidebar ringkasan */}
         <div className="lg:col-span-2">
-          <div className="sticky top-24 bg-white rounded-xl border border-border p-5 shadow-sm">
-            <h2 className="font-bold text-forest-950 mb-4">Total Pembayaran</h2>
+          <div className="sticky top-24 bg-card rounded-xl border border-border p-5 shadow-sm">
+            <h2 className="font-bold text-foreground mb-4">Total Pembayaran</h2>
             <dl className="space-y-2 text-sm mb-4">
               <div className="flex justify-between">
                 <dt className="text-muted-foreground">Subtotal sewa</dt>
@@ -265,7 +265,7 @@ export function CheckoutClient({ userId }: CheckoutClientProps) {
             </dl>
 
             {metode === "tunai" && (
-              <p className="text-xs bg-amber-50 border border-amber-200 text-amber-800 rounded-lg px-3 py-2 mb-4">
+              <p className="text-xs alert-warning rounded-lg px-3 py-2 mb-4">
                 Status awal: menunggu pembayaran. Bayar tunai saat pengambilan barang.
               </p>
             )}

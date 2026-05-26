@@ -27,7 +27,7 @@ export function RentalQr({ rentalId, size = 160 }: RentalQrProps) {
   if (!dataUrl) return <div className="bg-muted animate-pulse rounded-lg" style={{ width: size, height: size }} />;
 
   return (
-    <div className="inline-block p-3 bg-white rounded-xl border border-border">
+    <div className="inline-block p-3 bg-card rounded-xl border border-border">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={dataUrl} alt={`QR transaksi ${rentalId.slice(0, 8)}`} width={size} height={size} />
       <p className="text-[10px] text-center text-muted-foreground mt-2 font-mono">

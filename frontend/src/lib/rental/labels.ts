@@ -10,12 +10,14 @@ export const rentalStatusLabels: Record<RentalStatus, string> = {
 };
 
 export const rentalStatusColors: Record<RentalStatus, string> = {
-  menunggu_pembayaran: "bg-amber-100 text-amber-800 border-amber-200",
-  dibayar: "bg-blue-100 text-blue-800 border-blue-200",
-  diambil: "bg-primary/10 text-primary border-primary/20",
-  selesai: "bg-green-100 text-green-800 border-green-200",
-  dibatalkan: "bg-gray-100 text-gray-700 border-gray-200",
-  terlambat: "bg-destructive/10 text-destructive border-destructive/20",
+  menunggu_pembayaran:
+    "bg-amber-500/15 text-amber-800 border-amber-500/30 dark:text-amber-200",
+  dibayar: "bg-blue-500/15 text-blue-800 border-blue-500/30 dark:text-blue-200",
+  diambil: "bg-primary/15 text-primary border-primary/30 dark:text-primary",
+  selesai: "bg-green-500/15 text-green-800 border-green-500/30 dark:text-green-300",
+  dibatalkan:
+    "bg-muted text-muted-foreground border-border",
+  terlambat: "bg-destructive/15 text-destructive border-destructive/30",
 };
 
 export const paymentMethodLabels: Record<PaymentMethod, string> = {

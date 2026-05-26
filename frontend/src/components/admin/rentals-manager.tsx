@@ -65,10 +65,10 @@ export function RentalsManager({ rentals: initial }: RentalsManagerProps) {
         const isLoading = loadingId === rental.id;
 
         return (
-          <div key={rental.id} className="bg-white rounded-xl border border-border p-5">
+          <div key={rental.id} className="bg-card rounded-xl border border-border p-5">
             <div className="flex flex-wrap justify-between gap-2 mb-3">
               <div>
-                <p className="font-bold text-forest-950">{rental.users?.nama_lengkap ?? "—"}</p>
+                <p className="font-bold text-foreground">{rental.users?.nama_lengkap ?? "—"}</p>
                 <p className="text-xs text-muted-foreground">
                   {rental.users?.no_hp ?? "—"} · #{rental.id.slice(0, 8)}
                 </p>
@@ -105,7 +105,7 @@ export function RentalsManager({ rentals: initial }: RentalsManagerProps) {
                 <button
                   type="button"
                   onClick={() => void viewFile("ktp", rental.jaminan_ktp_url!)}
-                  className="text-xs flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border hover:bg-forest-50"
+                  className="text-xs flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border hover:bg-muted"
                 >
                   <Eye className="h-3.5 w-3.5" /> KTP
                 </button>
@@ -114,7 +114,7 @@ export function RentalsManager({ rentals: initial }: RentalsManagerProps) {
                 <button
                   type="button"
                   onClick={() => void viewFile("bukti-bayar", payment.bukti_pembayaran_url!)}
-                  className="text-xs flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border hover:bg-forest-50"
+                  className="text-xs flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border hover:bg-muted"
                 >
                   <Eye className="h-3.5 w-3.5" /> Bukti
                 </button>

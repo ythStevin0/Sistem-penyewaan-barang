@@ -32,7 +32,7 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
       onClick={(e) => void handleClick(e)}
       disabled={isLoading || pending}
       className={cn(
-        "p-2 rounded-full bg-white/90 shadow-sm border border-border/60 hover:scale-105 transition-all disabled:opacity-50",
+        "p-2 rounded-full bg-card/95 shadow-sm border border-border hover:scale-105 transition-all disabled:opacity-50",
         className
       )}
       aria-label={active ? "Hapus dari favorit" : "Tambah ke favorit"}

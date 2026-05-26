@@ -55,7 +55,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
       {/* Product Details Section */}
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-lg text-forest-950 line-clamp-1 group-hover:text-primary transition-colors mb-1">
+        <h3 className="font-bold text-lg text-foreground line-clamp-1 group-hover:text-primary transition-colors mb-1">
           <Link href={`/catalog/${product.slug}`}>
             <span className="absolute inset-0" aria-hidden="true" />
             {product.nama}
@@ -65,7 +65,7 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Rating Placeholder (Can be dynamic in future) */}
         <div className="flex items-center gap-1 mb-3">
           <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-          <span className="text-xs font-semibold text-forest-900">4.8</span>
+          <span className="text-xs font-semibold text-foreground">4.8</span>
           <span className="text-[10px] text-muted-foreground">(24 ulasan)</span>
         </div>
 
@@ -85,7 +85,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
           <div className="text-right">
             <span className="text-[10px] text-muted-foreground block uppercase font-bold tracking-wider">Status</span>
-            <span className={`text-xs font-semibold ${product.stok > 0 ? "text-green-600" : "text-destructive"}`}>
+            <span className={`text-xs font-semibold ${product.stok > 0 ? "text-green-600 dark:text-green-400" : "text-destructive"}`}>
               {product.stok > 0 ? `${product.stok} Tersedia` : "Habis"}
             </span>
           </div>

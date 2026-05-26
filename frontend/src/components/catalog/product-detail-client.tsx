@@ -61,7 +61,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         {/* Left Column: Image Gallery */}
         <div className="lg:col-span-6">
-          <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-white border border-border shadow-md">
+          <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-card border border-border shadow-md">
             <Image
               src={imageUrl}
               alt={product.nama}
@@ -88,18 +88,18 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
             <div className="flex items-center gap-1 bg-card px-3 py-1.5 rounded-full border border-border">
               <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-              <span className="text-xs font-bold text-forest-950">4.8</span>
+              <span className="text-xs font-bold text-foreground">4.8</span>
               <span className="text-[10px] text-muted-foreground">(24 Ulasan)</span>
             </div>
           </div>
 
           {/* Product Name */}
-          <h1 className="text-3xl md:text-4xl font-extrabold text-forest-950 mb-3 tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-foreground mb-3 tracking-tight">
             {product.nama}
           </h1>
 
           {/* Price & Stock status */}
-          <div className="p-4 rounded-xl bg-forest-50/50 border border-forest-100 flex items-center justify-between mb-6">
+          <div className="p-4 rounded-xl bg-muted/50 border border-border flex items-center justify-between mb-6">
             <div>
               <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground block">Tarif Sewa</span>
               <span className="text-2xl font-black text-primary">
@@ -110,7 +110,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
             <div className="text-right">
               <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground block">Ketersediaan</span>
-              <span className={`text-sm font-bold ${product.stok > 0 ? "text-green-600" : "text-destructive"}`}>
+              <span className={`text-sm font-bold ${product.stok > 0 ? "text-green-600 dark:text-green-400" : "text-destructive"}`}>
                 {product.stok > 0 ? `${product.stok} Unit Ready` : "Habis Sewa"}
               </span>
             </div>
@@ -118,7 +118,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
           {/* Description */}
           <div className="mb-6">
-            <h3 className="font-bold text-forest-950 mb-2">Deskripsi Produk</h3>
+            <h3 className="font-bold text-foreground mb-2">Deskripsi Produk</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {product.deskripsi}
             </p>
@@ -126,8 +126,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
           {/* Specifications Table (JSONB rendering) */}
           {Object.keys(product.spesifikasi).length > 0 && (
-            <div className="mb-8 bg-white rounded-xl border border-border p-5">
-              <h3 className="font-bold text-forest-950 mb-3 text-sm uppercase tracking-wider flex items-center gap-2">
+            <div className="mb-8 bg-card rounded-xl border border-border p-5">
+              <h3 className="font-bold text-foreground mb-3 text-sm uppercase tracking-wider flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-primary" />
                 Spesifikasi Teknis
               </h3>
@@ -135,8 +135,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 <table className="w-full text-sm">
                   <tbody className="divide-y divide-border/60">
                     {Object.entries(product.spesifikasi).map(([key, value]) => (
-                      <tr key={key} className="hover:bg-forest-50/20">
-                        <td className="px-4 py-3 font-semibold text-forest-900 bg-forest-50/30 w-1/3 capitalize">
+                      <tr key={key} className="hover:bg-muted/40">
+                        <td className="px-4 py-3 font-semibold text-foreground bg-muted/40 w-1/3 capitalize">
                           {key.replace(/_/g, " ")}
                         </td>
                         <td className="px-4 py-3 text-muted-foreground">
@@ -154,23 +154,23 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           {product.stok > 0 ? (
             <div className="space-y-4 mt-auto">
               <div className="flex items-center gap-4">
-                <span className="text-sm font-bold text-forest-950">Jumlah Sewa</span>
+                <span className="text-sm font-bold text-foreground">Jumlah Sewa</span>
                 
-                <div className="flex items-center border border-border rounded-lg bg-white overflow-hidden shadow-sm">
+                <div className="flex items-center border border-border rounded-lg bg-card overflow-hidden shadow-sm">
                   <button
                     onClick={handleDecrement}
                     disabled={quantity <= 1}
-                    className="p-2.5 hover:bg-forest-50 text-forest-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                    className="p-2.5 hover:bg-muted text-muted-foreground disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
                   >
                     <Minus className="h-4 w-4" />
                   </button>
-                  <span className="px-4 font-bold text-forest-950 w-12 text-center">
+                  <span className="px-4 font-bold text-foreground w-12 text-center">
                     {quantity}
                   </span>
                   <button
                     onClick={handleIncrement}
                     disabled={quantity >= product.stok}
-                    className="p-2.5 hover:bg-forest-50 text-forest-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                    className="p-2.5 hover:bg-muted text-muted-foreground disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
                   >
                     <Plus className="h-4 w-4" />
                   </button>
@@ -182,7 +182,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               </div>
 
               {cartFeedback && (
-                <p className="flex items-center gap-2 text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-2.5">
+                <p className="flex items-center gap-2 text-sm font-semibold alert-success rounded-lg px-4 py-2.5">
                   <Check className="h-4 w-4 shrink-0" />
                   {quantity}x {product.nama} ditambahkan ke keranjang.
                   <Link href="/cart" className="underline hover:no-underline ml-1">
