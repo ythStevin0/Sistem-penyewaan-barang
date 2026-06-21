@@ -5,8 +5,8 @@ const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "application/pdf
 
 export async function uploadUserFile(
   supabase: SupabaseClient,
-  bucket: "ktp" | "bukti-bayar",
-  userId: string,
+  bucket: "ktp" | "bukti-bayar" | "products",
+  folderName: string,
   file: File
 ): Promise<{ path: string } | { error: string }> {
   if (!ALLOWED_TYPES.includes(file.type)) {
@@ -19,7 +19,7 @@ export async function uploadUserFile(
 
   const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
   const safeExt = ["jpg", "jpeg", "png", "webp", "pdf"].includes(ext) ? ext : "jpg";
-  const path = `${userId}/${Date.now()}.${safeExt}`;
+  const path = `${folderName}/${Date.now()}.${safeExt}`;
 
   const { error } = await supabase.storage.from(bucket).upload(path, file, {
     cacheControl: "3600",

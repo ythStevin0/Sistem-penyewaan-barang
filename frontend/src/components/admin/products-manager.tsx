@@ -8,6 +8,8 @@ import type { ProductStatus } from "@/types";
 import { upsertProduct, deleteProduct } from "@/app/actions/admin";
 import { slugify } from "@/lib/utils/slug";
 import { formatRupiah } from "@/lib/format/currency";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { uploadUserFile } from "@/lib/storage/upload";
 
 interface ProductsManagerProps {
   products: Product[];
@@ -33,6 +35,7 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
 
   const openNew = () => {
     setForm({ ...emptyForm, category_id: categories[0]?.id ?? "" });
@@ -53,6 +56,7 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
       gambar_urls: p.gambar_urls?.join(", ") ?? "",
       spesifikasi: JSON.stringify(p.spesifikasi ?? {}, null, 2),
     });
+    setFiles([]);
     setIsOpen(true);
     setError(null);
   };
@@ -60,13 +64,40 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
   const handleSave = async () => {
     setLoading(true);
     setError(null);
+
+    let finalUrls = form.gambar_urls;
+
+    if (files.length > 0) {
+      const supabase = createSupabaseBrowserClient();
+      const uploadedUrls: string[] = [];
+
+      for (const file of files) {
+        const slugFolder = form.slug || "new-product";
+        const res = await uploadUserFile(supabase, "products", slugFolder, file);
+        if ('error' in res) {
+          setError(res.error);
+          setLoading(false);
+          return;
+        }
+        const { data: { publicUrl } } = supabase.storage.from("products").getPublicUrl(res.path);
+        uploadedUrls.push(publicUrl);
+      }
+      
+      // Jika sudah ada gambar sebelumnya dan mau ditambah, bisa diatur. 
+      // Untuk kemudahan, jika ada upload baru kita gabungkan (append) atau timpa.
+      // Di sini kita timpa jika user memilih file baru.
+      finalUrls = uploadedUrls.join(", ");
+    }
+
     const res = await upsertProduct({
       ...form,
+      gambar_urls: finalUrls,
       id: form.id || undefined,
     });
     if (!res.success) setError(res.error);
     else {
       setIsOpen(false);
+      setFiles([]);
       router.refresh();
     }
     setLoading(false);
@@ -202,12 +233,25 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
                 <option value="rusak">Rusak</option>
                 <option value="maintenance">Maintenance</option>
               </select>
-              <input
-                placeholder="URL gambar (pisah koma)"
-                value={form.gambar_urls}
-                onChange={(e) => setForm((f) => ({ ...f, gambar_urls: e.target.value }))}
-                className="w-full border rounded-lg px-3 py-2"
-              />
+              <div>
+                <label className="text-xs font-semibold mb-1 block">Gambar Produk (Bisa pilih &gt;1 file)</label>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/jpeg, image/png, image/webp"
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      setFiles(Array.from(e.target.files));
+                    }
+                  }}
+                  className="w-full border rounded-lg px-3 py-2 text-sm bg-background"
+                />
+                {form.gambar_urls && (
+                  <p className="text-xs mt-1 text-muted-foreground truncate">
+                    Tersimpan: {form.gambar_urls}
+                  </p>
+                )}
+              </div>
               <textarea
                 placeholder='Spesifikasi JSON, contoh: {"berat":"2kg"}'
                 value={form.spesifikasi}
